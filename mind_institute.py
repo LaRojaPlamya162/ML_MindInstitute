@@ -3,10 +3,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import numpy as np
 import xgboost as xgb
+import pandas as pd
+import os
+import numpy as np
+from scipy import stats
+from concurrent.futures import ThreadPoolExecutor
+from tqdm import tqdm
+import seaborn as sns
+import matplotlib.pyplot as plt
+train_df_path = '/kaggle/input/child-mind-institute-problematic-internet-use/train.csv'
+train_df = pd.read_csv(train_df_path)
+test_df_path = '/kaggle/input/child-mind-institute-problematic-internet-use/test.csv'
+test_df = pd.read_csv(test_df_path)
 
-# Đọc dữ liệu
-train_df = pd.read_csv("train.csv")
-test_df = pd.read_csv("test.csv")
 
 # Lấy danh sách cột chung giữa hai file
 common_columns = set(train_df.columns).intersection(set(test_df.columns))
