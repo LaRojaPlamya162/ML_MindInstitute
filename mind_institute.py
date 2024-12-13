@@ -37,8 +37,17 @@ for col in X_train.select_dtypes(include=['object']).columns:
     X_valid[col] = X_valid[col].astype('category')
 
 
-# Khởi tạo mô hình
-xgb_model = xgb.XGBRegressor(objective='reg:squarederror', n_estimators=100, random_state=42)
+# Khởi tạo mô hìnhxgb_model = xgb.XGBClassifier(
+    random_state=42,        # Đảm bảo tính tái lập kết quả
+    n_estimators=200,       # Số lượng cây tăng cường, tăng từ 100 lên 200
+    learning_rate=0.05,     # Giảm tốc độ học để mô hình học chậm hơn nhưng kỹ hơn
+    max_depth=6,            # Độ sâu tối đa của mỗi cây, kiểm soát độ phức tạp
+    subsample=0.8,          # Tỷ lệ mẫu ngẫu nhiên cho mỗi cây để giảm overfitting
+    colsample_bytree=0.8,   # Tỷ lệ cột được chọn để xây dựng mỗi cây
+    reg_alpha=1,            # Thêm regularization L1 để làm giảm độ phức tạp của mô hình
+    reg_lambda=1,           # Thêm regularization L2 để chống overfitting
+    enable_categorical=True # Hỗ trợ xử lý trực tiếp dữ liệu phân loại
+)
 
 # Huấn luyện mô hình
 xgb_model.fit(X_train, y_train)
